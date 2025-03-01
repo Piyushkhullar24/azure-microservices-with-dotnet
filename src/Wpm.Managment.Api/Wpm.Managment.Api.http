@@ -1,0 +1,6 @@
+@Wpm.Managment.Api_HostAddress = http://localhost:5098
+
+GET {{Wpm.Managment.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
