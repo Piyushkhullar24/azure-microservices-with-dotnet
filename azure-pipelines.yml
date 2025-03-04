@@ -17,7 +17,7 @@ steps:
   - task: AzureCLI@2
     displayName: 'Deploy to Azure Container Apps'
     inputs:
-      azureSubscription: 'pkmanagedId'
+      azureSubscription: 'pkmanagedId2'
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
       inlineScript: |
