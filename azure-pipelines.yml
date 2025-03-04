@@ -1,19 +1,37 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
-trigger:
-- main
-
-pool:
-  vmImage: ubuntu-latest
-
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+  - task: AzureCLI@2
+    displayName: 'Login to Azure using Managed Identity'
+    inputs:
+      azureSubscription: 'pkmanagedId2'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        az login --identity
+        az acr login --name Wpmpk
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  - script: |
+      docker build -f src/Wpm.Managment.Api/Dockerfile -t wpmpk.azurecr.io/wpm-management-api:$(Build.SourceVersion) src
+      docker push wpmpk.azurecr.io/wpm-management-api:$(Build.SourceVersion)
+    displayName: 'Build and Push Docker Image'
+
+  - task: AzureCLI@2
+    displayName: 'Deploy to Azure Container Apps'
+    inputs:
+      azureSubscription: 'pkmanagedId'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        az containerapp registry set \
+          --name wpm-management \
+          --resource-group Wpm \
+          --server wpmpk.azurecr.io \
+          --username "Wpmpk" \
+          --password "$(ACR_PASSWORD)"
+
+        az containerapp update \
+          --name wpm-management \
+          --resource-group Wpm \
+          --image wpmpk.azurecr.io/wpm-management-api:$(Build.SourceVersion) \
+          --set-env-vars "ENV=Production"
+
+        echo "✅ Deployment Completed Successfully!"
