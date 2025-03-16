@@ -12,7 +12,12 @@ steps:
   - script: |
       docker build -f src/Wpm.Managment.Api/Dockerfile -t wpmpk.azurecr.io/wpm-management-api:$(Build.SourceVersion) src
       docker push wpmpk.azurecr.io/wpm-management-api:$(Build.SourceVersion)
-    displayName: 'Build and Push Docker Image'
+    displayName: 'Build and Push Docker Management Image'
+  
+  - script: |
+      docker build -f src/Wpm.Clinic/Dockerfile -t wpmpk.azurecr.io/wpm-clinic-api:$(Build.SourceVersion) src
+      docker push wpmpk.azurecr.io/wpm-clinic-api:$(Build.SourceVersion)
+    displayName: 'Build and Push Docker Clinic Image'
 
   - task: AzureCLI@2
     displayName: 'Deploy to Azure Container Apps'
@@ -32,6 +37,28 @@ steps:
           --name wpm-management \
           --resource-group Wpm \
           --image wpmpk.azurecr.io/wpm-management-api:$(Build.SourceVersion) \
+          --set-env-vars "ENV=Production"
+
+        echo "✅ Deployment Completed Successfully!"
+
+  - task: AzureCLI@2
+    displayName: 'Deploy Clinic API to Azure Container Apps'
+    inputs:
+      azureSubscription: 'pkmanagedId2'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        az containerapp registry set \
+          --name wpm-clinic \
+          --resource-group Wpm \
+          --server wpmpk.azurecr.io \
+          --username "Wpmpk" \
+          --password "$(ACR_PASSWORD)"
+
+        az containerapp update \
+          --name wpm-clinic \
+          --resource-group Wpm \
+          --image wpmpk.azurecr.io/wpm-clinic-api:$(Build.SourceVersion) \
           --set-env-vars "ENV=Production"
 
         echo "✅ Deployment Completed Successfully!"
