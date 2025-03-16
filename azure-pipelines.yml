@@ -59,6 +59,6 @@ steps:
           --name wpm-clinic \
           --resource-group Wpm \
           --image wpmpk.azurecr.io/wpm-clinic-api:$(Build.SourceVersion) \
-          --set-env-vars "ENV=Production"
+          --set-env-vars "ENV=Production" "Wpm__ManagementUri=https://wpm-management.icyhill-5ec1444e.westus2.azurecontainerapps.io"
 
         echo "✅ Deployment Completed Successfully!"
