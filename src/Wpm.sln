@@ -5,18 +5,27 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpm.Managment.Api", "Wpm.Managment.Api\Wpm.Managment.Api.csproj", "{6B592230-BE0F-447B-9182-D12FB32E782D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpm.Clinic", "Wpm.Clinic\Wpm.Clinic.csproj", "{176BA881-1EE2-DEEB-A51B-28B6FE86EE44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{6B592230-BE0F-447B-9182-D12FB32E782D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6B592230-BE0F-447B-9182-D12FB32E782D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B592230-BE0F-447B-9182-D12FB32E782D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B592230-BE0F-447B-9182-D12FB32E782D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{176BA881-1EE2-DEEB-A51B-28B6FE86EE44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{176BA881-1EE2-DEEB-A51B-28B6FE86EE44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{176BA881-1EE2-DEEB-A51B-28B6FE86EE44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{176BA881-1EE2-DEEB-A51B-28B6FE86EE44}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {567491D1-CB25-46B3-9F78-140EB1D8DEF8}
 	EndGlobalSection
 EndGlobal
